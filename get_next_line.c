@@ -6,7 +6,7 @@
 /*   By: fgarzi-c <fgarzi-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 15:18:07 by fgarzi-c          #+#    #+#             */
-/*   Updated: 2023/02/13 19:21:13 by fgarzi-c         ###   ########.fr       */
+/*   Updated: 2023/02/13 22:36:32 by fgarzi-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*get_next_line(int fd)
 	// char	c; 		// valid in A.
 	char	*buf;
 	int		size;
-	int		buflen; // testing in B. valid in A.
+	// int		buflen; // testing in B. valid in A.
 
 	buf = malloc(BUFFER_SIZE + 1);
 	if (!buf)
@@ -31,21 +31,12 @@ char	*get_next_line(int fd)
 		write(1, "b\n", 2);
 		if (!size)
 			return (buf);
-		// return (ft_end_buf(buf, &fd));
-		write(1, "b.1\n", 4);
-		buflen = BUFFER_SIZE;
-		check_read_bufsize(&fd, &buflen);
+		return (ft_end_buf(buf, &fd));
 	}
 	else if (ft_strchr(buf, 10) && buf[BUFFER_SIZE] != 10)
-	{	
-		write(1, "c\n", 2);
 		return (ft_strcut(buf));
-	}
 	else
-	// {
-		write(1, "d\n", 2);
 		return (buf);
-	// }
 	/// A. ///
 	// while (++buflen < BUFFER_SIZE)
 	// {
