@@ -6,14 +6,28 @@
 /*   By: fgarzi-c <fgarzi-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 15:24:41 by fgarzi-c          #+#    #+#             */
-/*   Updated: 2023/02/13 22:34:35 by fgarzi-c         ###   ########.fr       */
+/*   Updated: 2023/02/14 04:07:08 by fgarzi-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+size_t	ft_strlen(char	*str, int c)
+{
+	size_t	i;
+
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i] != c)
+		i++;
+	return (i);
+}
+
 int	ft_strchr(char *str, char c)
 {
+	if (!str)
+		return (0);
 	while (*str)
 	{
 		if (*str == c)
@@ -25,57 +39,50 @@ int	ft_strchr(char *str, char c)
 
 char	*ft_strcut(char *str)
 {
-	int	i;
+	int		i;
 	char	*dest;
+	char	*newstr;
+	int		l;
 
-	i = -1;
-	while (str[++i])
-		if (str[i] == 10)
-			break ;
-	dest = malloc (i + 2);
-	if (!dest)
+	l = ft_strlen(str, 10) + 1;
+	dest = malloc(l + 1);
+	newstr = malloc(ft_strlen(str, 0) - l + 2);
+	if (!dest || !newstr)
 		return (NULL);
+	dest[l] = 0;
 	i = -1;
 	while (str[++i])
 	{
-		dest[i] = str[i];
-		if (str[i] == 10)
-			break ;
+		if (i < l)
+			dest[i] = str[i];
+		else
+			newstr[i - l] = str[i];
 	}
-	dest[i++] = 0;
+	newstr[i - l] = 0;
 	free(str);
+	str = newstr;
 	return (dest);
 }
 
-char	*ft_end_buf(char *str, int *fd)
+char	*ft_strjoin(char *s1, char *s2)
 {
-	char	c;
-	int		size;
-	char	*buf;
+	char	*str;
+	int		i;
+	int		j;
 
-	size = 1;
-	while (size > 0)
-	{
-		size = read(*fd, &c, 1);
-		buf = newstring(str, c);
-	}
-	return (buf);
-}
-
-char	*newstring(char *str, char c)
-{
-	char	*newstring;
-	int		len;
-
-	len = -1;
-	while (str[++len])
-		;
-	newstring = malloc(len + 2);
-	len = -1;
-	while (str[++len])
-		newstring[len] = str[len];
-	newstring[len] = c;
-	newstring[++len] = 0;
-	free(str);
-	return (newstring);	
+	// printf("s1: %s\n", s1);
+	str = malloc(ft_strlen(s1, 0) + ft_strlen(s2, 0) + 1);
+	if (!str)
+		return (NULL);
+	i = -1;
+	j = -1;
+	while (s1[++i])
+		str[i] = s1[i];
+	while (s2[++j])
+		str[i + j] = s2[j];
+	str[i + j] = 0;
+	// write(1, "sj4\n", 4);
+	if (*s1)
+		free(s1);
+	return (str);
 }

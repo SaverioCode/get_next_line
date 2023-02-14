@@ -6,7 +6,7 @@
 /*   By: fgarzi-c <fgarzi-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 15:18:07 by fgarzi-c          #+#    #+#             */
-/*   Updated: 2023/02/13 22:36:32 by fgarzi-c         ###   ########.fr       */
+/*   Updated: 2023/02/14 04:37:55 by fgarzi-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,51 +14,30 @@
 
 char	*get_next_line(int fd)
 {
-	// char	c; 		// valid in A.
-	char	*buf;
-	int		size;
-	// int		buflen; // testing in B. valid in A.
+	static char	*s_buf;
+	char		buf[BUFFER_SIZE + 1];
+	ssize_t		size;
 
-	buf = malloc(BUFFER_SIZE + 1);
-	if (!buf)
+	if (read(fd, 0, 0) < 0)
 		return (NULL);
-	/// B. ///
+	s_buf = "";
+	// printf("s_buf: %s\n", s_buf);
 	size = read(fd, buf, BUFFER_SIZE);
-	if (size < 0)
+	s_buf = ft_strjoin(s_buf, buf);
+	if (size == -1 && !ft_strlen(s_buf, 0))
 		return (NULL);
-	if (!ft_strchr(buf, 10))
+	while (!ft_strchr(s_buf, 10))
 	{
-		write(1, "b\n", 2);
+		// write(1, "c\n", 2);
 		if (!size)
-			return (buf);
-		return (ft_end_buf(buf, &fd));
+			return (s_buf);
+		size = read(fd, buf, BUFFER_SIZE);
+		// write(1, "d\n", 2);
+		s_buf = ft_strjoin(s_buf, buf);
+		// printf("s_buf: %s\n", s_buf);
+		// write(1, "c\n", 2);
 	}
-	else if (ft_strchr(buf, 10) && buf[BUFFER_SIZE] != 10)
-		return (ft_strcut(buf));
-	else
-		return (buf);
-	/// A. ///
-	// while (++buflen < BUFFER_SIZE)
-	// {
-	// 	size = read(fd, c, 1);
-	// 	if (size < 0)
-	// 		return (NULL);
-	// 	buf[buflen - 1] = c;
-	// 	if (c == 10 || !size)
-	// 		return (buf) ;
-	// }
-	// if (!ft_strchr(buf, 10))
-	// {
-	// 	while (buf[buflen] != 10)
-	// 	{	
-	// 		size = read(fd, c, 1);
-	// 		buf[++buflen] = c;
-	// 		if (c == 10 || !size)
-	// 			return (buf) ;
-	// 	}
-	// }
-	// buf[buflen] = 0;
-	// return (buf);
+	if (ft_strchr(s_buf, 10) && s_buf[ft_strlen(s_buf, 0) - 1] != 10)
+		return (ft_strcut(s_buf));
+	return (s_buf);
 }
- // A. first attempt loop read till buffer_size if zero or \n is no reached
- // B. second attempt read buffer_size and then cut what you whant to print
