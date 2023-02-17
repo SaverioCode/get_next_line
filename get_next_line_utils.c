@@ -6,7 +6,7 @@
 /*   By: fgarzi-c <fgarzi-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 15:24:41 by fgarzi-c          #+#    #+#             */
-/*   Updated: 2023/02/17 00:58:23 by fgarzi-c         ###   ########.fr       */
+/*   Updated: 2023/02/17 01:02:48 by fgarzi-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,7 @@ char	*ft_get_line(char *str)
 	int		l;
 
 	if (!str)
-	{
-		free(str);
-		return (NULL);
-	}
+		return (ft_free(str, NULL));
 	l = ft_strlen(str, 10) + 1;
 	dest = malloc(l + 1);
 	if (!dest)
@@ -95,10 +92,7 @@ char	*ft_backup(char	*backup)
 	int		i;
 
 	if (!backup)
-	{
-		free(backup);
-		return (NULL);
-	}
+		return (ft_free(backup, NULL));
 	l = ft_strlen(backup, 10) + 1;
 	str = malloc(ft_strlen(backup, 0) - l + 1);
 	if (!str)

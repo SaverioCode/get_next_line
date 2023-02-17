@@ -6,7 +6,7 @@
 /*   By: fgarzi-c <fgarzi-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 15:18:07 by fgarzi-c          #+#    #+#             */
-/*   Updated: 2023/02/17 00:56:51 by fgarzi-c         ###   ########.fr       */
+/*   Updated: 2023/02/17 01:03:57 by fgarzi-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 char	*ft_free(char *s1, char *s2)
 {
-	free(s1);
-	free(s2);
+	if (s1)
+		free(s1);
+	if (s2)
+		free(s2);
 	return (NULL);
 }
 
@@ -33,10 +35,7 @@ char	*get_next_line(int fd)
 			return (NULL);
 		size = read(fd, line, BUFFER_SIZE);
 		if (size < 0)
-		{
-			free(line);
-			return (NULL);
-		}
+			return (ft_free(line, NULL));
 		line[size] = 0;
 		s_buf = ft_strjoin(s_buf, line);
 	}
