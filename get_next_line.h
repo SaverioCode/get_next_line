@@ -6,7 +6,7 @@
 /*   By: fgarzi-c <fgarzi-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 15:25:00 by fgarzi-c          #+#    #+#             */
-/*   Updated: 2023/02/14 21:45:01 by fgarzi-c         ###   ########.fr       */
+/*   Updated: 2023/02/17 00:57:03 by fgarzi-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,14 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdarg.h>
+# include <string.h>
 
 char	*get_next_line(int fd);
 char	*ft_strchr(char *str, char c);
-char	*ft_get_line(char **str);
-char	*ft_strjoin(char *dest, char *str);
+char	*ft_get_line(char *str);
+char	*ft_strjoin(char *s1, char *s2);
 size_t	ft_strlen(char	*str, int c);
+char	*ft_backup(char	*backup);
+char	*ft_free(char *s1, char *s2);
 
 #endif
